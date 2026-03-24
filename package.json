@@ -1,0 +1,13 @@
+{
+  "name": "guoxue-static",
+  "version": "1.0.0",
+  "description": "国学传播平台静态站点",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0"
+  }
+}
