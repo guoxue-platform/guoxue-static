@@ -1,6 +1,7 @@
 {
   "name": "guoxue-static",
   "version": "1.0.0",
+  "type": "module",
   "description": "国学传播平台静态站点",
   "scripts": {
     "dev": "vitepress dev docs",
