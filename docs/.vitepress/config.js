@@ -10,7 +10,7 @@ export default defineConfig({
       { text: '史部', link: '/史部.html' },
       { text: '子部', link: '/子部.html' },
       { text: '集部', link: '/集部.html' },
-      { text: '素材库', link: '/sucai/' },
+      { text: '素材库', link: '/sucai/index.html' },
       { text: '专题', link: '/专题.html' }
     ],
     sidebar: {
@@ -19,10 +19,12 @@ export default defineConfig({
       '/子部.html': [{ text: '子部', items: [{ text: '诸子百家', link: '/子部.html' }] }],
       '/集部.html': [{ text: '集部', items: [{ text: '诗词文赋', link: '/集部.html' }] }],
       '/专题.html': [{ text: '专题', items: [{ text: '分类导读', link: '/专题.html' }] }],
-      '/sucai/': [{ text: '素材库', items: [
-        { text: '名句索引', link: '/sucai/mingju/' },
-        { text: '典故溯源', link: '/sucai/diangu/' },
-        { text: '作者简介', link: '/sucai/zuozhe/' }
+      '/sucai/index.html': [{ text: '素材库', items: [
+        { text: '名句·经部', link: '/sucai/mingju/jing/论语.html' },
+        { text: '名句·集部', link: '/sucai/mingju/ji/唐诗.html' },
+        { text: '典故·史部', link: '/sucai/diangu/shi/史记.html' },
+        { text: '典故·子部', link: '/sucai/diangu/zi/庄子.html' },
+        { text: '作者名录', link: '/sucai/zuozhe/shi/史部作者.html' }
       ]}]
     }
   }
