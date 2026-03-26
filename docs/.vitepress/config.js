@@ -11,7 +11,8 @@ export default defineConfig({
       { text: '子部', link: '/子部.html' },
       { text: '集部', link: '/集部.html' },
       { text: '素材库', link: '/sucai/index.html' },
-      { text: '专题', link: '/专题.html' }
+      { text: '专题', link: '/专题.html' },
+      { text: '🔍 搜索', link: '/search.html' }
     ],
     sidebar: {
       '/经部.html': [{ text: '经部', items: [{ text: '经典释经', link: '/经部.html' }] }],
