@@ -1,0 +1,345 @@
+openapi: 3.0.3
+info:
+  title: 公告系统 API
+  description: 基于 FastAPI + SQLite 的企业内部公告系统，提供公告发布、列表查询、详情查看、已读标记及未读统计功能。
+  version: 2.0.0
+  contact:
+    name: 开发天团
+    channel: mattermost
+
+servers:
+  - url: http://localhost:8000
+    description: 本地开发服务器
+  - url: https://api.example.com
+    description: 生产环境
+
+tags:
+  - name: 公告管理
+    description: 公告的发布、查询与管理
+  - name: 已读跟踪
+    description: 用户已读状态管理
+  - name: 健康检查
+    description: 服务健康状态
+
+paths:
+  /api/announcements:
+    post:
+      tags:
+        - 公告管理
+      summary: 发布公告
+      description: 创建一个新的公告，支持指定部门和作者信息。
+      operationId: createAnnouncement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AnnouncementCreate'
+            example:
+              title: 关于清明节放假的通知
+              content: 各部门同事请注意，清明节放假安排如下...
+              author: 人力资源部
+              department: 人力资源部
+      responses:
+        '200':
+          description: 公告创建成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnouncementDetail'
+        '422':
+          description: 请求参数校验失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+    get:
+      tags:
+        - 公告管理
+      summary: 公告列表
+      description: 获取公告列表，支持按部门和用户 ID 进行筛选。
+      operationId: listAnnouncements
+      parameters:
+        - name: department
+          in: query
+          description: 按部门筛选
+          required: false
+          schema:
+            type: string
+            example: 技术部
+        - name: user_id
+          in: query
+          description: 按用户 ID 筛选（返回该用户视角的已读/未读状态）
+          required: false
+          schema:
+            type: string
+            example: user_001
+      responses:
+        '200':
+          description: 公告列表获取成功
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnnouncementResponse'
+        '422':
+          description: 请求参数校验失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /api/announcements/{announcement_id}:
+    get:
+      tags:
+        - 公告管理
+      summary: 公告详情
+      description: 根据公告 ID 获取单条公告的完整信息。
+      operationId: getAnnouncementDetail
+      parameters:
+        - name: announcement_id
+          in: path
+          description: 公告唯一标识
+          required: true
+          schema:
+            type: string
+            example: "123"
+      responses:
+        '200':
+          description: 公告详情获取成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnnouncementDetail'
+        '404':
+          description: 公告不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+
+  /api/announcements/{announcement_id}/read:
+    post:
+      tags:
+        - 已读跟踪
+      summary: 标记已读
+      description: 将指定公告标记为当前用户的已读状态。
+      operationId: markAnnouncementAsRead
+      parameters:
+        - name: announcement_id
+          in: path
+          description: 公告唯一标识
+          required: true
+          schema:
+            type: string
+            example: "123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkReadRequest'
+            example:
+              user_id: user_001
+      responses:
+        '204':
+          description: 已读标记成功，无返回内容
+        '404':
+          description: 公告不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '422':
+          description: 请求参数校验失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+  /api/announcements/unread-count:
+    get:
+      tags:
+        - 已读跟踪
+      summary: 未读数统计
+      description: 统计指定用户或部门视角下的未读公告数量。
+      operationId: getUnreadCount
+      parameters:
+        - name: user_id
+          in: query
+          description: 用户 ID
+          required: false
+          schema:
+            type: string
+            example: user_001
+        - name: department
+          in: query
+          description: 部门名称
+          required: false
+          schema:
+            type: string
+            example: 技术部
+      responses:
+        '200':
+          description: 未读数统计成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnreadCountResponse'
+        '422':
+          description: 请求参数校验失败
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+
+components:
+  schemas:
+    AnnouncementCreate:
+      type: object
+      required:
+        - title
+        - content
+        - author
+        - department
+      properties:
+        title:
+          type: string
+          description: 公告标题
+          example: 关于清明节放假的通知
+        content:
+          type: string
+          description: 公告正文内容
+          example: 各部门同事请注意，清明节放假安排如下...
+        author:
+          type: string
+          description: 公告作者/发布人
+          example: 人力资源部
+        department:
+          type: string
+          description: 所属部门
+          example: 人力资源部
+
+    AnnouncementDetail:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 公告唯一标识
+          example: "123"
+        title:
+          type: string
+          description: 公告标题
+          example: 关于清明节放假的通知
+        content:
+          type: string
+          description: 公告正文内容
+          example: 各部门同事请注意，清明节放假安排如下...
+        author:
+          type: string
+          description: 公告作者
+          example: 人力资源部
+        department:
+          type: string
+          description: 所属部门
+          example: 人力资源部
+        created_at:
+          type: string
+          format: date-time
+          description: 发布时间（ISO 8601 格式）
+          example: "2026-03-28T10:00:00Z"
+        read_count:
+          type: integer
+          description: 已读人数
+          example: 42
+
+    AnnouncementResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 公告唯一标识
+          example: "123"
+        title:
+          type: string
+          description: 公告标题
+          example: 关于清明节放假的通知
+        author:
+          type: string
+          description: 公告作者
+          example: 人力资源部
+        department:
+          type: string
+          description: 所属部门
+          example: 人力资源部
+        created_at:
+          type: string
+          format: date-time
+          description: 发布时间
+          example: "2026-03-28T10:00:00Z"
+        is_read:
+          type: boolean
+          description: 当前用户是否已读（当请求中传入 user_id 时返回此字段）
+          example: false
+
+    MarkReadRequest:
+      type: object
+      required:
+        - user_id
+      properties:
+        user_id:
+          type: string
+          description: 用户 ID
+          example: user_001
+
+    UnreadCountResponse:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: 用户 ID
+          example: user_001
+        department:
+          type: string
+          description: 部门名称
+          example: 技术部
+        unread_count:
+          type: integer
+          description: 未读公告数量
+          example: 5
+
+    ValidationError:
+      type: object
+      properties:
+        detail:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  type: string
+              msg:
+                type: string
+              type:
+                type: string
+      example:
+        detail:
+          - loc:
+              - body
+              - title
+            msg: field required
+            type: value_error.missing
+
+    NotFoundError:
+      type: object
+      properties:
+        detail:
+          type: string
+          example: 公告不存在
+
+security:
+  - {}
