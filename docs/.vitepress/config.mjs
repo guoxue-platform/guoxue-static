@@ -15,6 +15,7 @@ export default defineConfig({
       { text: '子部', link: '/子部/' },
       { text: '集部', link: '/集部/' },
       { text: '素材库', link: '/sucai/' },
+      { text: '南师专栏', link: '/南师专栏/' },
       { text: '专题', link: '/专题/' },
       { text: '🔍 搜索', link: '/search.html' }
     ],
@@ -48,6 +49,14 @@ export default defineConfig({
         { text: '典故·史部', link: '/sucai/diangu/shi/' },
         { text: '典故·子部', link: '/sucai/diangu/zi/' },
         { text: '作者名录', link: '/sucai/zuozhe/' }
+      ]}],
+      '/南师专栏/': [{ text: '南师专栏 · 南怀瑾', items: [
+        { text: '南师著作', link: '/南师专栏/#南师著作' },
+        { text: '南师讲座', link: '/南师专栏/#南师讲座' },
+        { text: '南师开示', link: '/南师专栏/#南师开示' },
+        { text: '我与南师', link: '/南师专栏/#我与南师' },
+        { text: '南师相册', link: '/南师专栏/#南师相册' },
+        { text: '了解南师', link: '/南师专栏/#了解南师' }
       ]}],
       '/专题/': [{ text: '专题', items: [
         { text: '分类导读', link: '/专题/' }

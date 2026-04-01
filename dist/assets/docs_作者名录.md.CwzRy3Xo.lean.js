@@ -1,0 +1,1 @@
+import{_ as o,o as a,c as r,ae as n}from"./chunks/framework.C8MNLDzb.js";const d=JSON.parse('{"title":"作者名录","description":"","frontmatter":{},"headers":[],"relativePath":"docs/作者名录.md","filePath":"docs/作者名录.md"}'),s={name:"docs/作者名录.md"};function e(h,t,g,i,l,u){return a(),r("div",null,[...t[0]||(t[0]=[n("",57)])])}const c=o(s,[["render",e]]);export{d as __pageData,c as default};

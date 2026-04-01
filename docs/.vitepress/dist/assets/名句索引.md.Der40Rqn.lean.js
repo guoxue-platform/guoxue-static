@@ -1,0 +1,1 @@
+import{_ as d,o as r,c as a,ae as e}from"./chunks/framework.C23mN02-.js";const _=JSON.parse('{"title":"名句索引","description":"","frontmatter":{},"headers":[],"relativePath":"名句索引.md","filePath":"名句索引.md"}'),h={name:"名句索引.md"};function o(l,t,i,n,b,s){return r(),a("div",null,[...t[0]||(t[0]=[e("",14)])])}const u=d(h,[["render",o]]);export{_ as __pageData,u as default};

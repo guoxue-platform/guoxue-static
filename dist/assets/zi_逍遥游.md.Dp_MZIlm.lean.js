@@ -1,0 +1,1 @@
+import{_ as a,o,c as e,ae as r}from"./chunks/framework.C8MNLDzb.js";const q=JSON.parse('{"title":"《庄子·逍遥游》节选","description":"","frontmatter":{},"headers":[],"relativePath":"zi/逍遥游.md","filePath":"zi/逍遥游.md"}'),d={name:"zi/逍遥游.md"};function n(h,t,l,i,s,u){return o(),e("div",null,[...t[0]||(t[0]=[r("",22)])])}const p=a(d,[["render",n]]);export{q as __pageData,p as default};

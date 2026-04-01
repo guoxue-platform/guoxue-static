@@ -1,0 +1,1 @@
+import{_ as a,o as r,c as e,ae as o}from"./chunks/framework.C8MNLDzb.js";const u=JSON.parse('{"title":"《诗经·关雎》鉴赏","description":"","frontmatter":{},"headers":[],"relativePath":"jing/关雎.md","filePath":"jing/关雎.md"}'),n={name:"jing/关雎.md"};function h(d,t,i,s,l,p){return r(),e("div",null,[...t[0]||(t[0]=[o("",23)])])}const _=a(n,[["render",h]]);export{u as __pageData,_ as default};

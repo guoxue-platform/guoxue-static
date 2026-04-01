@@ -1,0 +1,1 @@
+import{_ as a,o as r,c as o,ae as e}from"./chunks/framework.C8MNLDzb.js";const g=JSON.parse('{"title":"《静夜思》鉴赏","description":"","frontmatter":{},"headers":[],"relativePath":"ji/静夜思.md","filePath":"ji/静夜思.md"}'),l={name:"ji/静夜思.md"};function i(n,t,s,d,h,c){return r(),o("div",null,[...t[0]||(t[0]=[e("",22)])])}const _=a(l,[["render",i]]);export{g as __pageData,_ as default};
